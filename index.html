@@ -1,0 +1,2702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moyinoluwa Olufisayo - Senior Product Designer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #fafafa;
+            --bg-secondary: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --accent: #0066cc;
+            --accent-light: #e6f2ff;
+            --border: #e5e5e5;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            /* background: rgba(250, 250, 250, 0.95); */
+            backdrop-filter: blur(20px);
+            /* border-bottom: 1px solid var(--border); */
+            z-index: 1000;
+            padding: 1.5rem 0;
+        }
+
+        .nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            /* padding: 8rem 2rem 1.5rem; */
+            padding-top: 8rem;
+            padding-right: 0;
+            padding-bottom: 1.5rem;
+            padding-left: 0;
+            max-width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .hero-intro {
+            display: inline-block;
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            line-height: 1.1;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin: 2rem 0;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            opacity: 0;
+        }
+
+        .hero-stat-value.animate {
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .hero-stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+        }
+
+        /* Enhanced counter animations */
+        .hero-stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+            opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        opacity 0.5s ease;
+            will-change: transform;
+        }
+
+        .hero-stat.animating .hero-stat-value {
+            opacity: 1;
+        }
+
+        .hero-stat-value.complete {
+            animation: counterPulse 0.6s ease;
+        }
+
+        @keyframes counterPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Add a subtle glow effect when counting */
+        .hero-stat.animating .hero-stat-value {
+            text-shadow: 0 0 20px rgba(0, 102, 204, 0.3);
+        }
+
+        /* Number ticker effect */
+        .hero-stat-value::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                transparent 40%,
+                rgba(0, 102, 204, 0.1) 50%,
+                transparent 60%,
+                transparent 100%
+            );
+            pointer-events: none;
+            opacity: 0;
+            animation: tickerScan 2.5s ease-out;
+        }
+
+        @keyframes tickerScan {
+            0% { 
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% { 
+                opacity: 0;
+                transform: translateY(100%);
+            }
+        }
+
+
+
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 255, 136, 0.1);
+            color: #00aa44;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin: 2rem 0;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #00aa44;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+
+        /* Featured Impact Section */
+        .case-studies {
+            padding: 3rem 0rem 4rem;
+            /* max-width: 1200px; */
+            /* margin: 0 auto; */
+            position: relative;
+            z-index: 1;
+          background: linear-gradient(
+                        180deg,
+                        #f8f9fb 0%,
+                        #f2f3f5 100%
+                    );
+        }
+
+        .case-studies-inner {
+            max-width: 1263px;
+            margin: 0 auto;
+            padding: 0 2rem;   /* keep side breathing room */
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section-title.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section-subtitle.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(552px, 1fr));
+            gap: 2rem;
+        }
+
+        .case-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            
+        }
+
+        .case-card.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .case-card:hover {
+            transform: translateY(-8px);
+            border-color: #ccc;
+            /* box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08); */
+        }
+
+        /* Add magnetic effect transitions */
+        .case-card,
+        .selected-card,
+        .bento-item,
+        .footer-box {
+            transform-style: preserve-3d;
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+                        box-shadow 0.4s cubic-bezier(0.23, 1, 0.32, 1) !important;
+        }
+
+        /* Enhanced shadows on hover */
+        .case-card:hover {
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        .selected-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12) !important;
+        }
+
+        .bento-item:not(.large):hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        /* .footer-box:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+        } */
+
+        .case-image {
+            width: 100%;
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+            background: #f0f0f0; /* Visible while image loads */
+            /* display: flex;
+            align-items: center;
+            justify-content: center; */
+        }
+
+        /* .case-image.booking1 {
+            background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
+        }
+
+        .case-image.booking2 {
+            background: linear-gradient(135deg, #00aa88 0%, #006655 100%);
+        }
+
+        .case-image.tools {
+            background: linear-gradient(135deg, #ff6b35 0%, #cc3311 100%);
+        } */
+
+        /* Remove the gradient backgrounds */
+        .case-image.booking1,
+        .case-image.booking2,
+        .case-image.tools {
+            background: none;
+        }
+
+
+        .case-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .case-image.dashboard img {
+            object-position: 50% 20%; /* Focuses on header/main area */
+        }
+
+        /* Remove the mockup text div */
+        .case-mockup {
+            /* color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 2rem; */
+            display: none;
+        }
+
+        .case-content {
+            padding: 2rem;
+        }
+
+        .case-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .case-company {
+            background: var(--accent);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .case-year {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .case-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .case-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .case-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .case-metric {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: 8px;
+        }
+
+        .case-metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+
+        .case-metric-label {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.5rem;
+        }
+
+        .case-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .case-tag {
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .case-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .case-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .case-link:hover {
+            gap: 1rem;
+            transform: translateX(4px);
+        }
+
+        .case-link:hover::after {
+            width: 100%;
+        }
+
+        .interactive-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 255, 136, 0.9);
+            color: #000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: pulse-badge 3s infinite;
+        }
+
+        .case-card:hover .interactive-badge {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* Hover effect */
+        .case-card:hover .case-image img {
+            transform: scale(1.08);
+        }
+
+        /* Selected Work Section */
+        .selected-work {
+            /* padding: 4rem 2rem; */
+            padding-top: 3rem;
+            padding-right: 2rem;
+            padding-bottom: 4rem;
+            padding-left: 2rem;
+              background: linear-gradient(
+                        180deg,
+                        #f8f9fb 0%,
+                        #f2f3f5 100%
+                    );
+        }
+
+        .selected-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .selected-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .selected-card {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .selected-card.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .selected-card:hover {
+            transform: translateY(-4px);
+            border-color: #ccc;
+        }
+
+        .selected-image {
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+            background: #f0f0f0;    /* Visible while image loads */
+            /* display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative; */
+        }
+
+        .selected-image.legal,
+        .selected-image.energy,
+        .selected-image.research {
+            background: none;
+        }
+
+        .selected-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+        display: block;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+     }
+
+        /* .selected-image.legal {
+            background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
+        }
+
+        .selected-image.energy {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .selected-image.research {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        } */
+
+        .selected-mockup {
+            display: none;
+            /* color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center; */
+        }
+
+        .selected-content {
+            padding: 1.5rem;
+        }
+
+        .selected-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .selected-company {
+            background: #1E293B;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .selected-year {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .selected-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .selected-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .selected-metric {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .selected-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1E293B;
+        }
+
+        .selected-label {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .selected-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;  /* Add this */
+            overflow: hidden;    /* Add this */
+            display: inline-flex;  /* Add this */
+            align-items: center;   /* Add this */
+            gap: 0.5rem;          /* Add this */
+        }
+
+        .selected-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .selected-link:hover {
+            transform: translateX(4px);
+            gap: 1rem;
+        }
+
+        .selected-link:hover::after {
+            width: 100%;
+        }
+
+        /* Loading state - subtle skeleton */
+        .case-image:not(:has(img)),
+        .selected-image:not(:has(img)) {
+            background: linear-gradient(90deg, 
+                #f0f0f0 25%, 
+                #e8e8e8 50%, 
+                #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Additional Experience Section - Bento Grid */
+        .additional-experience {
+            padding-top: 3rem;
+            padding-right: 2rem;
+            padding-bottom: 4rem;
+            padding-left: 2rem;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            position: relative;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .additional-experience::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle at 20% 50%, rgba(0, 102, 204, 0.03) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 80%, rgba(0, 102, 204, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .additional-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Bento Grid Layout */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 250px);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .bento-item {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .bento-item:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            /* box-shadow: 0 20px 40px rgba(0, 102, 204, 0.15); */
+        }
+
+        .bento-item.large {
+            grid-column: span 2;
+            grid-row: span 2;
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+        }
+
+        .bento-item.tall {
+            grid-row: span 2;
+            background: linear-gradient(135deg, #f3f4f6 0%, #ffffff 100%);
+        }
+
+        .bento-item.wide {
+            grid-column: span 2;
+        }
+
+        .bento-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .bento-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .bento-description {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .bento-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: auto;
+        }
+
+        .bento-stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bento-number {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .bento-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.7;
+            margin-top: 0.25rem;
+        }
+
+        .bento-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: auto;
+        }
+
+        .bento-item.large .bento-link {
+            color: white;
+        }
+
+        .bento-link:hover {
+            gap: 1rem;
+        }
+
+        .project-preview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .preview-thumb {
+            aspect-ratio: 1;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .preview-thumb:hover {
+            transform: scale(1.05);
+        }
+
+        /* About Section - Simplified and Minimal */
+        .about {
+            padding-top: 3rem;
+            padding-right: 2rem;
+            padding-bottom: 4rem;
+            padding-left: 2rem;
+            background: linear-gradient(
+                        180deg,
+                        #f8f9fb 0%,
+                        #f2f3f5 100%
+                    );
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #1a1a1a;
+            position: relative;
+            display: inline-block;
+        }
+
+        .about-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: #0066cc;
+        }
+
+        .about-text {
+            font-size: 1.125rem;
+            color: #666666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            max-width: 100%;
+        }
+
+        .about-text strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        /* Remove philosophy box if you want exact match to image */
+        .philosophy-box {
+            display: none;
+        }
+
+        .philosophy-text {
+            font-size: 1.05rem;
+            font-style: italic;
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        /* Footer Styles */
+        .footer {
+            width: 100%;
+            background: #ffffff;
+            /* border-top: 1px solid #e5e5e5; */
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-container {
+           max-width: 1263px; 
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Bento Grid Layout */
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            max-width: 1200px; 
+        }
+
+        .footer-box {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Main Info Box */
+        .footer-box.main {
+            grid-row: span 2;
+            /* background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); */
+            background: #1E293B;
+            color: white;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-tagline {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .footer-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            width: fit-content;
+        }
+
+        .footer-box.connect {
+            grid-row: span 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .footer-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .connect-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .connect-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            padding: 0.5rem 0;
+        }
+
+        .connect-link:hover {
+            color: #1E293B;
+            font-weight: 700;
+            transform: translateX(4px);
+        }
+
+        .connect-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.6;
+        }
+
+        .footer-box.social {
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.25rem;
+        }
+
+        .social-link {
+            width: 44px;
+            height: 44px;
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: #1E293B;
+            color: white;
+            border-color: #1E293B;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px #1E293B33;
+        }
+
+        .footer-box.actions {
+            /* background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%); */
+            background-color: #1E293B;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .footer-box.actions:hover {
+            /* transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 102, 204, 0.25); */
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(30, 41, 59, 0.25);
+            background: #1E293B; /* Keep the same background on hover */
+        }
+
+        .action-text {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .action-subtext {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid #e5e5e5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copyright {
+            color: #999;
+            font-size: 0.875rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .footer-legal a {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-legal a:hover {
+            color: #0066cc;
+        }
+
+        /* Footer Responsive */
+        @media (max-width: 968px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .footer-box.main {
+                grid-row: span 1;
+            }
+            
+            .footer-box.connect {
+                grid-row: span 1;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .footer-legal {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .social-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* Additional Experience - Updated Colors */
+        .bento-item.large {
+            grid-column: span 2;
+            grid-row: span 2;
+            background: #1E293B;
+            color: white;
+        }
+
+        .bento-item.large:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(30, 41, 59, 0.25);
+            background: #1E293B; /* Keep the same background on hover */
+        }
+
+        .bento-item:not(.large):hover {
+            transform: translateY(-4px);
+            border-color: #475569;
+            box-shadow: 0 20px 40px rgba(30, 41, 59, 0.15);
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: var(--text-primary);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* Mobile Menu Styles */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transition: right 0.3s ease;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links a {
+                font-size: 1.2rem;
+            }
+            
+            /* Animated hamburger */
+            .mobile-menu-btn.active span:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .mobile-menu-btn.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .mobile-menu-btn.active span:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            
+            /* Overlay */
+            .mobile-menu-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 998;
+            }
+            
+            .mobile-menu-overlay.active {
+                display: block;
+            }
+        }
+
+        /* Animations */
+        @keyframes pulse-dot {
+            0%, 100% { 
+                opacity: 1;
+                box-shadow: 0 0 0 0 rgba(0, 170, 68, 0.4);
+            }
+            50% { 
+                opacity: 0.7;
+                box-shadow: 0 0 0 6px rgba(0, 170, 68, 0);
+            }
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4);
+            }
+            50% { 
+                box-shadow: 0 0 0 8px rgba(0, 255, 136, 0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* .nav-links { display: none; } */
+            .hero { padding: 6rem 1rem 3rem; }
+            .hero-stats { flex-direction: column; gap: 2rem; }
+            .cases-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .case-metrics { grid-template-columns: repeat(2, 1fr); }
+            .selected-grid { grid-template-columns: 1fr; }
+            .bento-grid { 
+                grid-template-columns: 1fr; 
+                grid-template-rows: auto;
+            }
+            .bento-item.large {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+            .bento-item.tall {
+                grid-row: span 1;
+            }
+            .about-content { grid-template-columns: 1fr; }
+            .contact-links { flex-direction: column; align-items: center; }
+
+            .case-image {
+                height: 220px; /* Slightly smaller on mobile */
+            }
+            
+            .selected-image {
+                height: 160px;
+            }
+
+             /* Reduce hover scale on mobile */
+            .case-card:hover .case-image img,
+            .selected-card:hover .selected-image img {
+                transform: scale(1.04);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .case-image {
+                height: 180px;
+            }
+            
+            .selected-image {
+                height: 140px;
+            }
+        }
+
+                    /* Password Protection Styles */
+            .nda-badge {
+                position: absolute;
+                top: 1rem;
+                left: 1rem;
+                background: rgba(30, 41, 59, 0.9);
+                color: white;
+                padding: 0.4rem 0.8rem;
+                border-radius: 20px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                z-index: 2;
+            }
+
+            .nda-badge svg {
+                width: 14px;
+                height: 14px;
+                fill: currentColor;
+            }
+
+            .nda-badge.unlocked {
+                background: rgba(16, 185, 129, 0.9);
+            }
+
+            /* Password Modal Styles */
+            .password-modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 2000;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .password-modal.active {
+                display: flex;
+            }
+
+            .password-modal-content {
+                background: var(--bg-secondary);
+                border-radius: 20px;
+                padding: 3rem;
+                max-width: 450px;
+                width: 90%;
+                text-align: center;
+                position: relative;
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            }
+
+            .password-modal-close {
+                position: absolute;
+                top: 1.5rem;
+                right: 1.5rem;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: var(--text-muted);
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                transition: all 0.3s ease;
+            }
+
+            .password-modal-close:hover {
+                background: var(--bg-primary);
+                color: var(--text-primary);
+            }
+
+            .password-modal h3 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+                color: var(--text-primary);
+            }
+
+            .password-modal-subtitle {
+                color: var(--text-secondary);
+                margin-bottom: 2rem;
+                line-height: 1.5;
+            }
+
+            .password-input-wrapper {
+                position: relative;
+                margin-bottom: 1.5rem;
+            }
+
+            .password-input {
+                width: 100%;
+                padding: 1rem 1.5rem;
+                border: 2px solid var(--border);
+                border-radius: 10px;
+                font-size: 1rem;
+                font-family: inherit;
+                background: var(--bg-primary);
+                color: var(--text-primary);
+                transition: all 0.3s ease;
+            }
+
+            .password-input:focus {
+                outline: none;
+                border-color: var(--accent);
+                background: var(--bg-secondary);
+            }
+
+            .password-input.error {
+                border-color: #ef4444;
+                animation: shake 0.5s;
+            }
+
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+
+            .password-error {
+                color: #ef4444;
+                font-size: 0.875rem;
+                margin-top: 0.5rem;
+                display: none;
+            }
+
+            .password-error.active {
+                display: block;
+            }
+
+            .password-submit {
+                background: var(--accent);
+                color: white;
+                border: none;
+                padding: 1rem 2.5rem;
+                border-radius: 10px;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .password-submit:hover {
+                background: #0052a3;
+                transform: translateY(-2px);
+            }
+
+            .password-hint {
+                margin-top: 1.5rem;
+                padding-top: 1.5rem;
+                border-top: 1px solid var(--border);
+                font-size: 0.875rem;
+                color: var(--text-muted);
+            }
+
+            .lock-status {
+                position: fixed;
+                bottom: 2rem;
+                right: 2rem;
+                background: rgba(16, 185, 129, 0.9);
+                color: white;
+                padding: 0.75rem 1.5rem;
+                border-radius: 30px;
+                font-size: 0.875rem;
+                display: none;
+                align-items: center;
+                gap: 0.5rem;
+                z-index: 100;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .lock-status.active {
+                display: flex;
+            }
+
+            .lock-status:hover {
+                transform: translateY(-2px);
+                background: rgba(16, 185, 129, 1);
+            }
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">Moyinoluwa Olufisayo</div>
+
+        <!-- mobile nav links -->
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+            <ul class="nav-links">
+                <li><a href="#work"  onclick="closeMobileMenu()">Work</a></li>
+                <li><a href="#about"  onclick="closeMobileMenu()">About</a></li>
+                <li><a href="#contact"  onclick="closeMobileMenu()">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+        <!-- Password Modal -->
+    <div class="password-modal" id="passwordModal">
+        <div class="password-modal-content">
+            <button class="password-modal-close" onclick="closePasswordModal()">×</button>
+            <h3>🔒 NDA Protected Content</h3>
+            <p class="password-modal-subtitle">
+                This case study contains confidential information protected under NDA. 
+                Please enter the access password to continue.
+            </p>
+            <div class="password-input-wrapper">
+                <input 
+                    type="password" 
+                    class="password-input" 
+                    id="passwordInput" 
+                    placeholder="Enter password"
+                    onkeypress="if(event.key === 'Enter') verifyPassword()"
+                >
+                <div class="password-error" id="passwordError">
+                    Incorrect password. Please try again.
+                </div>
+            </div>
+            <button class="password-submit" onclick="verifyPassword()">
+                Unlock Case Studies
+            </button>
+            <div class="password-hint">
+                Need access? Please contact me for the password.
+            </div>
+        </div>
+    </div>
+
+    <!-- Lock Status Indicator -->
+    <div class="lock-status" id="lockStatus" onclick="relockProjects()">
+        🔓 Projects Unlocked • Click to lock
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-intro">Senior Product Designer</div>
+        <h1 class="hero-title">Driving Impacts Through Strategic Design</h1>
+        <p class="hero-subtitle">6+ years creating data-driven user experiences at Booking.com that deliver measurable business impact through systematic design thinking</p>
+        
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="hero-stat-value">€207M+</span>
+                <span class="hero-stat-label">Revenue Generated</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-value">>154%</span>
+                <span class="hero-stat-label">Conversion Improvement</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-value">500+</span>
+                <span class="hero-stat-label">Team Members Using My Internal Tool</span>
+            </div>
+        </div>
+
+        <div class="status-indicator">
+            <span class="status-dot"></span>
+            Available for Senior/Lead Product Designer roles
+        </div>
+    </section>
+
+    <!-- Featured Impact -->
+    <section class="case-studies" id="work">
+        <div class="case-studies-inner">
+            <h2 class="section-title">Featured Impact</h2>
+            <p class="section-subtitle">Recent work at Booking.com driving measurable business results</p>
+
+            <div class="cases-grid">
+
+             <!-- Case Study 1: Ancillary Growth -->
+            <div class="case-card">
+                <div class="case-image">
+                        <img src="images/featured/fast-track-v1.png" 
+                            alt="Fast Track ancillary, 1 of 5 ancillaries launched" 
+                            loading="lazy">
+                            <div class="nda-badge" data-project-id="project-1">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>NDA</span>
+                        </div>
+                    </div>
+                <div class="case-content">
+                    <div class="case-meta">
+                        <div class="case-company">Booking.com</div>
+                        <div class="case-year">2023</div>
+                    </div>
+                    <h3 class="case-title">Ancillary Growth: 5 New Products Launched</h3>
+                    <p class="case-description">Spearheaded cross-functional team to discover and launch 5 new ancillary products, expanding Booking.com's portfolio through strategic design sprints and systematic experimentation.</p>
+                    
+                    <div class="case-metrics">
+                        <div class="case-metric">
+                            <span class="case-metric-value">€17M+</span>
+                            <span class="case-metric-label">Revenue</span>
+                        </div>
+                        <div class="case-metric">
+                            <span class="case-metric-value">52%</span>
+                            <span class="case-metric-label">Attach Rate</span>
+                        </div>
+                        <div class="case-metric">
+                            <span class="case-metric-value">5</span>
+                            <span class="case-metric-label">Products</span>
+                        </div>
+                    </div>
+
+                    <div class="case-tags">
+                        <span class="case-tag">0-to-1 Products</span>
+                        <span class="case-tag">Design Strategy</span>
+                        <span class="case-tag">Team Leadership</span>
+                        <span class="case-tag">Workshop Facilitation</span>
+                        <span class="case-tag">Fast Track Ancillary (1 of 5)</span>
+                    </div>
+                    
+                    <a href="https://www.figma.com/deck/w4dO8Rab6oWuGKNAu3YsTy" class="case-link" target="_blank">
+                        View Full Case Study →
+                    </a>
+                </div>
+            </div>   
+            
+            <!-- Case Study 2: Product Vision -->
+            <div class="case-card">
+                <div class="case-image">
+                        <img src="images/featured/product-vision.png" 
+                            alt="Product Vision - 16+ Strategic Initiatives" 
+                            loading="lazy">
+                        <div class="nda-badge" data-project-id="project-1">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>NDA</span>
+                        </div>
+                    </div>
+                <div class="case-content">
+                    <div class="case-meta">
+                        <div class="case-company">Booking.com</div>
+                        <div class="case-year">2024-2025</div>
+                    </div>
+                    <h3 class="case-title">Product Vision: 16+ Strategic Initiatives</h3>
+                    <p class="case-description">Defined comprehensive 5-year UX vision for post-booking ancillaries, leading 2-day design sprint with 30+ participants, generating scalable design patterns for future products.</p>
+                    
+                    <div class="case-metrics">
+                        <div class="case-metric">
+                            <span class="case-metric-value">30+</span>
+                            <span class="case-metric-label">Participants</span>
+                        </div>
+                        <div class="case-metric">
+                            <span class="case-metric-value">16+</span>
+                            <span class="case-metric-label">Ideas Generated</span>
+                        </div>
+                        <div class="case-metric">
+                            <span class="case-metric-value">5 Yr</span>
+                            <span class="case-metric-label">Roadmap</span>
+                        </div>
+                    </div>
+
+                    <div class="case-tags">
+                        <span class="case-tag">Strategic Vision</span>
+                        <span class="case-tag">Design Sprints</span>
+                        <span class="case-tag">Workshop Facilitation</span>
+                        <span class="case-tag">Usability Testing</span>
+                        <span class="case-tag">Team Leadership</span>
+                    </div>
+                    
+                    <a href="https://wax-camel-ae0.notion.site/Led-2025-Ancillaries-Product-Vision-2191a7989b9a8018bdfbfe48a696cf99?source=copy_link" class="case-link" target="_blank">
+                        View Full Case Study →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Case Study 3: Fast Track Version 2 -->
+            <div class="case-card">
+                <div class="case-image">
+                        <img src="images/featured/fast-track-v2.png" 
+                            alt="Scalling Fast Track Version out of M" 
+                            loading="lazy">
+                        <div class="nda-badge" data-project-id="project-1">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>NDA</span>
+                        </div>
+                    </div>
+                <div class="case-content">
+                    <div class="case-meta">
+                        <div class="case-company">Booking.com</div>
+                        <div class="case-year">2024</div>
+                    </div>
+                    <h3 class="case-title">Scaled Fast Track out of MVP with over 20% Attach Rate</h3>
+                    <p class="case-description">Using data, experimentation, and usability testing to scale the Fast Track ancillary our of MVP, boosting adoption and attach rate to over 50%</p>
+                    
+                    <div class="case-metrics">
+                        <div class="case-metric">
+                            <span class="case-metric-value">500+</span>
+                            <span class="case-metric-label">Active Users</span>
+                        </div>
+                        <div class="case-metric">
+                            <span class="case-metric-value">50+</span>
+                            <span class="case-metric-label">Teams</span>
+                        </div>
+                        <div class="case-metric">
+                            <span class="case-metric-value">100%</span>
+                            <span class="case-metric-label">Coverage</span>
+                        </div>
+                    </div>
+
+                    <div class="case-tags">
+                        <span class="case-tag">Experiment Analysis</span>
+                        <span class="case-tag">Hypothesis</span>
+                        <span class="case-tag">Usability Testing</span>
+                        <span class="case-tag">Brainstorming workshop</span>
+                        <span class="case-tag">Iteration 2</span>
+                        <span class="case-tag">A/B Testing</span>
+                    </div>
+                    
+                    <a href="https://www.figma.com/deck/SyEVtWXsOu98cwN8kzTMX6" class="case-link" target="_blank">
+                        View Full Case Study →
+                    </a>
+                </div>
+            </div>
+
+                <!-- Case Study 4: Cross-Sell -->
+            <div class="case-card">
+                <div class="interactive-badge">Interactive Deep Dive</div>
+                <div class="case-image">
+                        <img src="images/featured/cross-sell-ui.png" 
+                            alt="Cross-Sell Optimization - Mobile and Desktop Flows" 
+                            loading="lazy">
+                        <div class="nda-badge" data-project-id="project-1">
+                            <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span>NDA</span>
+                        </div>
+                    </div>
+                <div class="case-content">
+                    <div class="case-meta">
+                        <div class="case-company">Booking.com</div>
+                        <div class="case-year">2022-2023</div>
+                    </div>
+                    <h3 class="case-title">Cross-Sell Growth: 24% → 61% Conversion</h3>
+                    <p class="case-description">Led end-to-end UX strategy for flights-to-accommodations cross-sell, identifying pain points and optimizing complex user flows through systematic user research and data-driven design decisions.</p>
+                    
+                    <div class="case-metrics">
+                        <div class="case-metric">
+                            <span class="case-metric-value">€135M+</span>
+                            <span class="case-metric-label">Annual Revenue</span>
+                        </div>
+                        <div class="case-metric">
+                            <span class="case-metric-value">61%</span>
+                            <span class="case-metric-label">Final Rate</span>
+                        </div>
+                        <div class="case-metric">
+                            <span class="case-metric-value">18 Mo</span>
+                            <span class="case-metric-label">Timeline</span>
+                        </div>
+                    </div>
+
+                    <div class="case-tags">
+                        <span class="case-tag">User Research</span>
+                        <span class="case-tag">A/B Testing</span>
+                        <span class="case-tag">Cross-functional Leadership</span>
+                        <span class="case-tag">Growth Design</span>
+                        <span class="case-tag">Connected Trip Experience</span>
+                        
+                    </div>
+                    
+                    <a href="https://drive.google.com/file/d/1UKHvdRFyGjVHbxWPlF8mfQUX7eyZksF_/view?usp=sharing" class="case-link" target="_blank">
+                        Watch Recap Video →
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </section>
+
+    <!-- Selected Work -->
+    <section class="selected-work">
+        <div class="selected-container">
+            <h2 class="section-title">Selected Work</h2>
+            <p class="section-subtitle">Additional projects showcasing range and versatility</p>
+            
+            <!-- //selected work 2 -->
+            <div class="selected-grid">
+                <div class="selected-card">
+                    <div class="selected-image">
+                        <img src="images/selected/primsol.png" 
+                            alt="LegalTech Platform Interface Design" 
+                            loading="lazy">
+                    </div>
+                    <div class="selected-content">
+                        <div class="selected-meta">
+                            <span class="selected-company">Lawpavilion</span>
+                            <span class="selected-year">2019-2022</span>
+                        </div>
+                        <h4 class="selected-title">Legal Research Platform</h4>
+                        <p class="selected-description">End-to-end product design for flagship legal research platform</p>
+                        <div class="selected-metric">
+                            <span class="selected-value">48%</span>
+                            <span class="selected-label">Performance Increase</span>
+                        </div>
+                        <a href="https://wax-camel-ae0.notion.site/Saas-Primsol-Legal-Research-Tool-for-Lawyers-1577485c501946b2a5a040ae07a38921?source=copy_link" target="_blank" class="selected-link"> View Project →</a>
+                    </div>
+                </div>
+
+
+                <!-- //selected work 2 -->
+                <div class="selected-card">
+                    <div class="selected-image">
+                        <img src="images/selected/dispatch-now.png" 
+                            alt="LegalTech Platform Interface Design" 
+                            loading="lazy">
+                    </div>
+                    <div class="selected-content">
+                        <div class="selected-meta">
+                            <span class="selected-company">Dispatch Now</span>
+                            <span class="selected-year">2019 -2020</span>
+                        </div>
+                        <h4 class="selected-title">Improving Delivery in Africa</h4>
+                        <p class="selected-description">0-to-1 product design for B2C and B2B delivery platforms</p>
+                        <div class="selected-metric">
+                            <span class="selected-value">Funded</span>
+                            <span class="selected-label">Investor Success</span>
+                        </div>
+                        <a href="https://wax-camel-ae0.notion.site/DispatchNow-B2C-a04b0ad641a545b9aea8ccb3debbf482?source=copy_link" target="_blank" class="selected-link">View Project →</a>
+                    </div>
+                </div>
+
+                <!-- //selected work 3 -->
+                <div class="selected-card">
+                    <div class="selected-image">
+                        <img src="images/selected/earwac.png" 
+                            alt="LegalTech Platform Interface Design" 
+                            loading="lazy">
+                    </div>
+                    <div class="selected-content">
+                        <div class="selected-meta">
+                            <span class="selected-company">EARWAC</span>
+                            <span class="selected-year">2021</span>
+                        </div>
+                        <h4 class="selected-title">Scientific Research Tool</h4>
+                        <p class="selected-description">Dashboard design for scientists, professors, and students</p>
+                        <div class="selected-metric">
+                            <span class="selected-value">Research</span>
+                            <span class="selected-label">Focus</span>
+                        </div>
+                        <a href="https://pitch.com/v/defining-ux-for-the-earwac-dashboard-hg29hc" target="_blank" class="selected-link">View Project →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Experience - Bento Grid -->
+    <section class="additional-experience">
+        <div class="additional-container">
+            <h2 class="section-title">Additional Experience</h2>
+            <p class="section-subtitle">Comprehensive portfolio spanning multiple industries and platforms</p>
+            
+            <div class="bento-grid">
+                <!-- Large Featured Item -->
+                <div class="bento-item large">
+                    <div>
+                        <div class="bento-icon">📚</div>
+                        <h3 class="bento-title">Complete Case Study Archive</h3>
+                        <p class="bento-description">
+                            6 comprehensive projects spanning logistics, legal tech, and research platforms. 
+                            Each with detailed process documentation, research insights, and measurable outcomes.
+                        </p>
+                    </div>
+                    <div class="bento-stats">
+                        <div class="bento-stat">
+                            <div class="bento-number">6</div>
+                            <div class="bento-label" style="color: white; opacity: 0.8;">Full Projects</div>
+                        </div>
+                        <div class="bento-stat">
+                            <div class="bento-number">3</div>
+                            <div class="bento-label" style="color: white; opacity: 0.8;">Industries</div>
+                        </div>
+                    </div>
+                    <a href="https://wax-camel-ae0.notion.site/Moyinoluwa-Olufisayo-568cf4bf1b404b909b065c91a0c99f0a?pvs=4" 
+                       class="bento-link" target="_blank">
+                        Explore Full Archive →
+                    </a>
+                </div>
+
+                <!-- UI Explorations -->
+                <div class="bento-item tall">
+                    <div>
+                        <div class="bento-icon">🎨</div>
+                        <h3 class="bento-title">UI Explorations</h3>
+                        <p class="bento-description">Creative interface experiments and visual designs</p>
+                    </div>
+                    <!-- <div class="project-preview">
+                        <div class="preview-thumb"></div>
+                        <div class="preview-thumb"></div>
+                        <div class="preview-thumb"></div>
+                        <div class="preview-thumb"></div>
+                        <div class="preview-thumb"></div>
+                        <div class="preview-thumb"></div>
+                    </div> -->
+                    <a href="https://wax-camel-ae0.notion.site/3ef50152afa4467d97ccec096df9471a?v=2eb8ef01ca444977946be7a270814f5c&source=copy_link" target="_blank" class="bento-link" style="color: var(--accent);">
+                        View Gallery →
+                    </a>
+                </div>
+
+                <!-- Mentorship -->
+                <div class="bento-item">
+                    <div>
+                        <div class="bento-icon">🌟</div>
+                        <h3 class="bento-title">Mentorship</h3>
+                        <div class="bento-stats">
+                            <div class="bento-stat">
+                                <div class="bento-number">20+</div>
+                                <div class="bento-label">Mentees</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community -->
+                <div class="bento-item">
+                    <div>
+                        <div class="bento-icon">🤝</div>
+                        <h3 class="bento-title">Product & Pixels</h3>
+                        <p class="bento-description">Leading 230+ designer community</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- About Section - Simplified and Minimal -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <h2 class="about-title">Senior Design Leadership</h2>
+            <p class="about-text">
+                Currently leading flight ancillary growth at Booking.com, I specialize in transforming 
+                <strong>complex user problems</strong> into <strong>scalable design solutions</strong> that 
+                drive measurable business impact. My approach combines <strong>deep user research</strong>, 
+                <strong>data-driven decision making</strong>, and <strong>strategic design thinking</strong> 
+                to create experiences that both users and businesses love.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-container">
+            <!-- Bento Grid -->
+            <div class="footer-grid">
+                <!-- Main Info Box -->
+                <div class="footer-box main">
+                    <div>
+                        <div class="footer-logo">Moyinoluwa Olufisayo</div>
+                        <p class="footer-tagline">
+                            Senior Product Designer with 6+ years of experience transforming complex problems into elegant solutions. 
+                            Currently driving €152M+ revenue through strategic design at Booking.com.
+                        </p>
+                    </div>
+                    <div class="footer-status">
+                        <span class="status-dot"></span>
+                        Open to new opportunities
+                    </div>
+                </div>
+
+                <!-- Connect Box -->
+                <div class="footer-box connect">
+                    <h4 class="footer-section-title">Let's Connect</h4>
+                    <ul class="connect-links">
+                        <li>
+                            <a href="mailto:moyinoluwafisayo@gmail.com" class="connect-link">
+                                <svg class="connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                                    <path d="m22 7-10 5L2 7"/>
+                                </svg>
+                                Email Me
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/in/moyinoluwa-olufisayo-4493871aa/" class="connect-link" target="_blank">
+                                <svg class="connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                                    <rect x="2" y="9" width="4" height="12"/>
+                                    <circle cx="4" cy="4" r="2"/>
+                                </svg>
+                                LinkedIn
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="connect-link">
+                                <svg class="connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                                Schedule Call
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Social Links Box -->
+                <div class="footer-box social">
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/moyinoluwa-olufisayo-4493871aa/" class="social-link" target="_blank">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                                <rect x="2" y="9" width="4" height="12"/>
+                                <circle cx="4" cy="4" r="2"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+                                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Action Box -->
+                <a href="https://drive.google.com/file/d/14fdb_1TlB99b1-U9pupVQYW6DT6iDqug/view?usp=sharing" class="footer-box actions">
+                    <div>
+                        <div class="action-text">Download Resume</div>
+                        <div class="action-subtext">PDF • Updated Sept 2025</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    © 2025 Moyinoluwa Olufisayo. All rights reserved.
+                </p>
+                <ul class="footer-legal">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+        let userHasInteracted = false;
+
+        // Password Protection System
+        const PASSWORD_HASH = "7c6a180b36896a0a8c02787eeafb0e4c"; // MD5 hash of "password1"
+        let pendingProjectUrl = null;
+
+        // List of protected project IDs
+        const PROTECTED_PROJECTS = ['project-1', 'project-2', 'project-3', 'project-4'];
+
+        // Simple MD5 hash function (or you can use a library)
+        function md5(string) {
+            return CryptoJS.MD5(string).toString();
+        }
+
+        // Check if projects are unlocked
+        function isUnlocked() {
+            return sessionStorage.getItem('ndaUnlocked') === 'true';
+        }
+
+        // Show password modal
+        function showPasswordModal() {
+            document.getElementById('passwordModal').classList.add('active');
+            document.getElementById('passwordInput').focus();
+        }
+
+        // Close password modal
+        function closePasswordModal() {
+            document.getElementById('passwordModal').classList.remove('active');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordError').classList.remove('active');
+            document.getElementById('passwordInput').classList.remove('error');
+        }
+
+        // Verify password
+        function verifyPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const hashedInput = md5(input);
+            
+            // For this example, let's check against plain text
+            // In production, you'd hash the input and compare: if (hashedInput === PASSWORD_HASH)
+            if (input === 'Naladdog') { // Change this to your actual password
+                sessionStorage.setItem('ndaUnlocked', 'true');
+                closePasswordModal();
+                updateLockIndicators();
+                
+                // Show unlock notification
+                document.getElementById('lockStatus').classList.add('active');
+                
+                // If there was a pending redirect, go there
+                if (pendingProjectUrl) {
+                   window.open(pendingProjectUrl, '_blank');
+                    pendingProjectUrl = null;
+                }
+            } else {
+                // Show error
+                document.getElementById('passwordInput').classList.add('error');
+                document.getElementById('passwordError').classList.add('active');
+                
+                // Clear error after 3 seconds
+                setTimeout(() => {
+                    document.getElementById('passwordInput').classList.remove('error');
+                    document.getElementById('passwordError').classList.remove('active');
+                }, 3000);
+            }
+        }
+
+        // Update lock indicators
+        function updateLockIndicators() {
+            const badges = document.querySelectorAll('.nda-badge');
+            const unlocked = isUnlocked();
+            
+            badges.forEach(badge => {
+                if (unlocked) {
+                    badge.classList.add('unlocked');
+                    badge.innerHTML = `
+                        <svg viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2h-2.5V7a2.5 2.5 0 10-5 0v2h-2V7a5 5 0 015-5z"></path>
+                        </svg>
+                        <span>Unlocked</span>
+                    `;
+                }
+            });
+            
+            // Show/hide lock status
+            if (unlocked) {
+                document.getElementById('lockStatus').classList.add('active');
+            }
+        }
+
+        // Re-lock projects
+        function relockProjects() {
+            sessionStorage.removeItem('ndaUnlocked');
+            location.reload();
+        }
+
+        // Override the case study links
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update lock indicators on load
+            updateLockIndicators();
+            
+            // Intercept clicks on case study links
+            const caseLinks = document.querySelectorAll('.case-link');
+            caseLinks.forEach((link, index) => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Check if this is a protected project (all Booking.com projects)
+                    if (index < 4 && !isUnlocked()) {
+                        pendingProjectUrl = this.href;
+                        showPasswordModal();
+                    } else {
+                        // For non-protected projects or if already unlocked
+                        window.open(this.href, '_blank'); 
+                    }
+                });
+            });
+            // Also handle selected work and bento links to open in new tabs
+    const otherLinks = document.querySelectorAll('.selected-link, .bento-link');
+    otherLinks.forEach(link => {
+        if (link.href && link.href !== '#') {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.open(this.href, '_blank');
+            });
+        }
+    });
+        
+        });
+
+    // Mobile menu functions
+    function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const overlay = document.querySelector('.mobile-menu-overlay') || createOverlay();
+            
+            navLinks.classList.toggle('active');
+            menuBtn.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            
+            navLinks.classList.remove('active');
+            menuBtn.classList.remove('active');
+            if (overlay) overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function createOverlay() {
+            const overlay = document.createElement('div');
+            overlay.className = 'mobile-menu-overlay';
+            overlay.onclick = closeMobileMenu;
+            document.body.appendChild(overlay);
+            return overlay;
+        }
+        // Format numbers with commas, prefix, suffix, and percentage
+       
+
+        // Track any user interaction
+        document.addEventListener('click', () => {
+            userHasInteracted = true;
+        }, { once: true });
+
+        document.addEventListener('keydown', () => {
+            userHasInteracted = true;
+        }, { once: true });
+
+        document.addEventListener('scroll', () => {
+            userHasInteracted = true;
+        }, { once: true });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('section-title') || 
+                        entry.target.classList.contains('section-subtitle')) {
+                        entry.target.classList.add('in-view');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Counter animation for hero stats
+        function animateCounters() {
+            const counters = document.querySelectorAll('.hero-stat-value');
+            let completedCounters = 0; // Track how many have finished
+            
+            counters.forEach((counter, index) => {
+                const originalText = counter.textContent;
+                
+                // Extract number, prefix, and suffix automatically
+                const match = originalText.match(/([^\d]*)(\d+\.?\d*)([^\d]*)/);
+                if (!match) return;
+                
+                const prefix = match[1] || '';
+                const numericTarget = parseFloat(match[2]);
+                const suffix = match[3] || '';
+                const hasDecimals = match[2].includes('.');
+                const decimalPlaces = hasDecimals ? match[2].split('.')[1].length : 0;
+                
+                // Special effects for milestone numbers
+                if (numericTarget >= 100 && suffix.includes('M')) {
+                    counter.parentElement.classList.add('milestone-achievement');
+                }
+                
+                // Animation variables
+                let current = 0;
+                const increment = numericTarget / 100;
+                const duration = 2500;
+                const stepTime = duration / 100;
+                
+                counter.style.opacity = '1';
+                counter.parentElement.classList.add('animating');
+                
+                const updateCounter = () => {
+                    current += increment;
+                    
+                    if (current >= numericTarget) {
+                        // Final value with original formatting
+                        counter.textContent = originalText;
+                        counter.classList.add('complete');
+                        
+                        // Add pulse effect on completion
+                        counter.style.transform = 'scale(1.1)';
+                        setTimeout(() => {
+                            counter.style.transform = 'scale(1)';
+                        }, 200);
+                        
+                        // Play sound when THIS counter completes
+                        playCompletionSound();
+                        
+                        // Or play one sound when ALL counters complete:
+                        completedCounters++;
+                        if (completedCounters === counters.length) {
+                            // playFinalSound(); // Uncomment for single sound at end
+                        }
+                        
+                    } else {
+                        // Animated value continues...
+                        counter.textContent = formatNumber(current, prefix, suffix, suffix === '%');
+                        requestAnimationFrame(() => setTimeout(updateCounter, stepTime));
+                    }
+                };
+                
+                // Stagger animations
+                setTimeout(updateCounter, index * 200);
+            });
+        }
+
+        function playCompletionSound() {
+            if (!userHasInteracted) return; // Only play if user has interacted
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            
+            // Create a soft white noise burst (like a gentle "puff")
+            const bufferSize = audioContext.sampleRate * 0.03; // 30ms
+            const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+            const output = buffer.getChannelData(0);
+            
+            // Generate white noise
+            for (let i = 0; i < bufferSize; i++) {
+                output[i] = Math.random() * 2 - 1;
+            }
+            
+            const whiteNoise = audioContext.createBufferSource();
+            whiteNoise.buffer = buffer;
+            
+            // Filter to make it softer (low-pass)
+            const filter = audioContext.createBiquadFilter();
+            filter.type = "lowpass";
+            filter.frequency.value = 400; // Very low frequency for muffled sound
+            
+            // Volume envelope
+            const gainNode = audioContext.createGain();
+            gainNode.gain.setValueAtTime(0.03, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + 0.001); // Very quiet
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.02);
+            
+            // Connect the nodes
+            whiteNoise.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            whiteNoise.start(audioContext.currentTime);
+            whiteNoise.stop(audioContext.currentTime + 0.02);
+        }
+
+function formatNumber(num, prefix, suffix, isPercentage) {
+    if (isPercentage) {
+        return prefix + num.toFixed(0) + suffix;
+    }
+    
+    // Add commas for thousands
+    if (num >= 1000) {
+        return prefix + num.toLocaleString('en-US', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }) + suffix;
+    }
+    
+    return prefix + num.toFixed(0) + suffix;
+}
+
+function playTickSound() {
+    // This is a complete base64-encoded tick sound (very short click)
+    const tickSound = 'data:audio/wav;base64,UklGRl4GAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YToGAAABAAEAAQACAAMAAwADAAMABAAEAAUABQAFAAYABgAGAAYABgAGAAYABQAFAAUABAAEAAMAAwACAAEAAQAAAP//////////';
+    
+    const audio = new Audio(tickSound);
+    audio.volume = 0.1; // Very quiet
+    audio.play().catch(e => {}); // Silently ignore if blocked
+}
+
+        // Typewriter effect for contact section
+        const roles = [
+            "Looking for a Senior Product Designer",
+            "Looking for a Design Lead",
+            "Looking for a Growth Designer",
+            "Looking for a UX Strategy Partner"
+        ];
+        
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typewriterElement = document.getElementById('typewriter-text');
+        
+        function typeWriter() {
+            if (!typewriterElement) return;
+            
+            const currentRole = roles[roleIndex];
+            
+            if (isDeleting) {
+                typewriterElement.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+                
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    roleIndex = (roleIndex + 1) % roles.length;
+                }
+            } else {
+                typewriterElement.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+                
+                if (charIndex === currentRole.length) {
+                    isDeleting = true;
+                    setTimeout(typeWriter, 2000); // Pause at the end
+                    return;
+                }
+            }
+            
+            setTimeout(typeWriter, isDeleting ? 50 : 100);
+        }
+
+        // Enhanced animations for all sections
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start typewriter
+            setTimeout(typeWriter, 1000);
+
+            // Observe sections for animations
+            const sectionsToObserve = document.querySelectorAll('.section-title, .section-subtitle');
+            sectionsToObserve.forEach(section => observer.observe(section));
+
+            // Trigger counter animation when hero stats are visible
+            const heroStats = document.querySelector('.hero-stats');
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+            
+            if (heroStats) {
+                statsObserver.observe(heroStats);
+            }
+
+            // Enhanced animations for all cards
+            const featuredCards = document.querySelectorAll('.case-card');
+            const selectedCards = document.querySelectorAll('.selected-card');
+            const bentoItems = document.querySelectorAll('.bento-item');
+
+            // Observe sections for staggered animations
+            const cardObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (entry.target.classList.contains('case-studies')) {
+                            featuredCards.forEach((card, index) => {
+                                setTimeout(() => card.classList.add('animate-in'), index * 200);
+                            });
+                        } else if (entry.target.classList.contains('selected-work')) {
+                            selectedCards.forEach((card, index) => {
+                                setTimeout(() => card.classList.add('animate-in'), index * 150);
+                            });
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Observe all sections
+            document.querySelectorAll('.case-studies, .selected-work').forEach(section => {
+                cardObserver.observe(section);
+            });
+
+            // Animate bento grid items on scroll
+            const bentoObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            bentoItems.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                bentoObserver.observe(item);
+            });
+
+           function applyMagneticEffect(element, settings) {
+        let animationFrame;
+        
+        element.addEventListener('mouseenter', () => {
+            element.style.willChange = 'transform';
+        });
+        
+        element.addEventListener('mousemove', (e) => {
+            if (animationFrame) cancelAnimationFrame(animationFrame);
+            
+            animationFrame = requestAnimationFrame(() => {
+                const rect = element.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                const percentX = (e.clientX - centerX) / (rect.width / 2);
+                const percentY = (e.clientY - centerY) / (rect.height / 2);
+                
+                const translateX = percentX * settings.maxMove;
+                const translateY = percentY * settings.maxMove;
+                const scale = 1 + settings.scale;
+                const rotateX = -percentY * settings.rotation;
+                const rotateY = percentX * settings.rotation;
+                
+                element.style.transform = `
+                    translate(${translateX}px, ${translateY}px)
+                    scale(${scale})
+                    rotateX(${rotateX}deg)
+                    rotateY(${rotateY}deg)
+                `;
+            });
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            if (animationFrame) cancelAnimationFrame(animationFrame);
+            element.style.transform = '';
+            element.style.willChange = 'auto';
+        });
+    }
+    
+    // Apply to different elements with different strengths
+    if (window.matchMedia('(min-width: 768px)').matches) {
+        // Featured work cards - strongest effect
+        document.querySelectorAll('.case-card').forEach(card => {
+            applyMagneticEffect(card, {
+                maxMove: 12,
+                scale: 0.03,
+                rotation: 0.5
+            });
+        });
+        
+        // Selected work cards - medium effect
+        document.querySelectorAll('.selected-card').forEach(card => {
+            applyMagneticEffect(card, {
+                maxMove: 8,
+                scale: 0.02,
+                rotation: 0.3
+            });
+        });
+        
+        // Bento items - subtle effect
+        document.querySelectorAll('.bento-item:not(.large)').forEach(card => {
+            applyMagneticEffect(card, {
+                maxMove: 5,
+                scale: 0.01,
+                rotation: 0.2
+            });
+        });
+        
+        // Large bento item - special treatment
+        document.querySelectorAll('.bento-item.large').forEach(card => {
+            applyMagneticEffect(card, {
+                maxMove: 15,
+                scale: 0.02,
+                rotation: 0.4
+            });
+        });
+        
+        // Footer boxes - very subtle
+        document.querySelectorAll('.footer-box').forEach(box => {
+            applyMagneticEffect(box, {
+                maxMove: 4,
+                scale: 0.01,
+                rotation: 0
+            });
+        });
+    } 
+
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</body>
+</html>
