@@ -872,16 +872,42 @@
             gap: 0.5rem;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s ease;
+            /* transition: all 0.3s ease; */
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             margin-top: auto;
+            position: relative; 
+            overflow: hidden;
+            align-self: flex-start; /* Add this - prevents stretching */
+            width: fit-content; /* Add this - shrink to content */
+        }
+
+        .bento-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white; /* White for large bento */
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .bento-item:not(.large) .bento-link::after {
+            background: var(--accent); /* Blue for other bentos */
         }
 
         .bento-item.large .bento-link {
             color: white;
+            align-self: flex-start;
         }
 
         .bento-link:hover {
             gap: 1rem;
+            transform: translateX(4px);
+        }
+
+        .bento-link:hover::after {
+            width: 100%;
         }
 
         .project-preview {
@@ -1800,15 +1826,15 @@
                     
                     <div class="case-metrics">
                         <div class="case-metric">
-                            <span class="case-metric-value">500+</span>
-                            <span class="case-metric-label">Active Users</span>
+                            <span class="case-metric-value">20+%</span>
+                            <span class="case-metric-label">Attach Rate</span>
                         </div>
                         <div class="case-metric">
-                            <span class="case-metric-value">50+</span>
-                            <span class="case-metric-label">Teams</span>
+                            <span class="case-metric-value">2</span>
+                            <span class="case-metric-label">Iterations</span>
                         </div>
                         <div class="case-metric">
-                            <span class="case-metric-value">100%</span>
+                            <span class="case-metric-value">43%</span>
                             <span class="case-metric-label">Coverage</span>
                         </div>
                     </div>
@@ -1857,7 +1883,7 @@
                         </div>
                         <div class="case-metric">
                             <span class="case-metric-value">61%</span>
-                            <span class="case-metric-label">Final Rate</span>
+                            <span class="case-metric-label">Attach Rate</span>
                         </div>
                         <div class="case-metric">
                             <span class="case-metric-value">18 Mo</span>
@@ -2259,33 +2285,108 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Update lock indicators on load
             updateLockIndicators();
-            
-            // Intercept clicks on case study links
-            const caseLinks = document.querySelectorAll('.case-link');
-            caseLinks.forEach((link, index) => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
+                // Handle clicks on case cards
+            const caseCards = document.querySelectorAll('.case-card');
+            caseCards.forEach((card, index) => {
+                card.style.cursor = 'pointer';
+                
+                card.addEventListener('click', function(e) {
+                    // If clicking the link button itself, let it handle normally
+                    if (e.target.closest('.case-link')) {
+                        e.preventDefault();
+                        const link = e.target.closest('.case-link');
+                        
+                        if (index < 4 && !isUnlocked()) {
+                            pendingProjectUrl = link.href;
+                            showPasswordModal();
+                        } else {
+                            window.open(link.href, '_blank');
+                        }
+                        return;
+                    }
                     
-                    // Check if this is a protected project (all Booking.com projects)
-                    if (index < 4 && !isUnlocked()) {
-                        pendingProjectUrl = this.href;
-                        showPasswordModal();
-                    } else {
-                        // For non-protected projects or if already unlocked
-                        window.open(this.href, '_blank'); 
+                    // Otherwise, clicking anywhere else on card
+                    const link = card.querySelector('.case-link');
+                    if (link) {
+                        if (index < 4 && !isUnlocked()) {
+                            pendingProjectUrl = link.href;
+                            showPasswordModal();
+                        } else {
+                            window.open(link.href, '_blank');
+                        }
                     }
                 });
             });
-            // Also handle selected work and bento links to open in new tabs
-    const otherLinks = document.querySelectorAll('.selected-link, .bento-link');
-    otherLinks.forEach(link => {
-        if (link.href && link.href !== '#') {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.open(this.href, '_blank');
+    
+            // Handle clicks on selected cards
+            const selectedCards = document.querySelectorAll('.selected-card');
+            selectedCards.forEach(card => {
+                card.style.cursor = 'pointer';
+                
+                card.addEventListener('click', function(e) {
+                    // If clicking the link button itself, let it handle normally
+                    if (e.target.closest('.selected-link')) {
+                        e.preventDefault();
+                        window.open(e.target.closest('.selected-link').href, '_blank');
+                        return;
+                    }
+                    
+                    // Otherwise, clicking anywhere else on card
+                    const link = card.querySelector('.selected-link');
+                    if (link) {
+                        window.open(link.href, '_blank');
+                    }
+                });
             });
-        }
-    });
+            
+            // // Intercept clicks on case study links
+            // const caseLinks = document.querySelectorAll('.case-link');
+            // caseLinks.forEach((link, index) => {
+            //     link.addEventListener('click', function(e) {
+            //         e.preventDefault();
+                    
+            //         // Check if this is a protected project (all Booking.com projects)
+            //         if (index < 4 && !isUnlocked()) {
+            //             pendingProjectUrl = this.href;
+            //             showPasswordModal();
+            //         } else {
+            //             // For non-protected projects or if already unlocked
+            //             window.open(this.href, '_blank'); 
+            //         }
+            //     });
+            // });
+            // Also handle selected work and bento links to open in new tabs
+            const otherLinks = document.querySelectorAll('.selected-link, .bento-link');
+            otherLinks.forEach(link => {
+                if (link.href && link.href !== '#') {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        window.open(this.href, '_blank');
+                    });
+                }
+            });
+
+            // Make bento items clickable (entire card)
+            const bentoItems = document.querySelectorAll('.bento-item');
+            bentoItems.forEach(item => {
+                // Only make clickable if it has a link
+                const bentoLink = item.querySelector('.bento-link');
+                if (bentoLink) {
+                    item.style.cursor = 'pointer';
+                    
+                    item.addEventListener('click', function(e) {
+                        // If clicking the link itself, let it handle normally
+                        if (e.target.closest('.bento-link')) {
+                            e.preventDefault();
+                            window.open(e.target.closest('.bento-link').href, '_blank');
+                            return;
+                        }
+                        
+                        // Otherwise, clicking anywhere else on the bento card
+                        window.open(bentoLink.href, '_blank');
+                    });
+                }
+            });   
         
         });
 
@@ -2607,93 +2708,93 @@ function playTickSound() {
                 bentoObserver.observe(item);
             });
 
-           function applyMagneticEffect(element, settings) {
-        let animationFrame;
-        
-        element.addEventListener('mouseenter', () => {
-            element.style.willChange = 'transform';
-        });
-        
-        element.addEventListener('mousemove', (e) => {
-            if (animationFrame) cancelAnimationFrame(animationFrame);
+            function applyMagneticEffect(element, settings) {
+                let animationFrame;
+                
+                element.addEventListener('mouseenter', () => {
+                    element.style.willChange = 'transform';
+                });
+                
+                element.addEventListener('mousemove', (e) => {
+                    if (animationFrame) cancelAnimationFrame(animationFrame);
+                    
+                    animationFrame = requestAnimationFrame(() => {
+                        const rect = element.getBoundingClientRect();
+                        const centerX = rect.left + rect.width / 2;
+                        const centerY = rect.top + rect.height / 2;
+                        
+                        const percentX = (e.clientX - centerX) / (rect.width / 2);
+                        const percentY = (e.clientY - centerY) / (rect.height / 2);
+                        
+                        const translateX = percentX * settings.maxMove;
+                        const translateY = percentY * settings.maxMove;
+                        const scale = 1 + settings.scale;
+                        const rotateX = -percentY * settings.rotation;
+                        const rotateY = percentX * settings.rotation;
+                        
+                        element.style.transform = `
+                            translate(${translateX}px, ${translateY}px)
+                            scale(${scale})
+                            rotateX(${rotateX}deg)
+                            rotateY(${rotateY}deg)
+                        `;
+                    });
+                    });
+                    
+                    element.addEventListener('mouseleave', () => {
+                        if (animationFrame) cancelAnimationFrame(animationFrame);
+                        element.style.transform = '';
+                        element.style.willChange = 'auto';
+                    });
+            }
             
-            animationFrame = requestAnimationFrame(() => {
-                const rect = element.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
+            // Apply to different elements with different strengths
+            if (window.matchMedia('(min-width: 768px)').matches) {
+                // Featured work cards - strongest effect
+                document.querySelectorAll('.case-card').forEach(card => {
+                    applyMagneticEffect(card, {
+                        maxMove: 12,
+                        scale: 0.03,
+                        rotation: 0.5
+                    });
+                });
                 
-                const percentX = (e.clientX - centerX) / (rect.width / 2);
-                const percentY = (e.clientY - centerY) / (rect.height / 2);
+                // Selected work cards - medium effect
+                document.querySelectorAll('.selected-card').forEach(card => {
+                    applyMagneticEffect(card, {
+                        maxMove: 8,
+                        scale: 0.02,
+                        rotation: 0.3
+                    });
+                });
                 
-                const translateX = percentX * settings.maxMove;
-                const translateY = percentY * settings.maxMove;
-                const scale = 1 + settings.scale;
-                const rotateX = -percentY * settings.rotation;
-                const rotateY = percentX * settings.rotation;
+                // Bento items - subtle effect
+                document.querySelectorAll('.bento-item:not(.large)').forEach(card => {
+                    applyMagneticEffect(card, {
+                        maxMove: 5,
+                        scale: 0.01,
+                        rotation: 0.2
+                    });
+                });
                 
-                element.style.transform = `
-                    translate(${translateX}px, ${translateY}px)
-                    scale(${scale})
-                    rotateX(${rotateX}deg)
-                    rotateY(${rotateY}deg)
-                `;
-            });
-        });
-        
-        element.addEventListener('mouseleave', () => {
-            if (animationFrame) cancelAnimationFrame(animationFrame);
-            element.style.transform = '';
-            element.style.willChange = 'auto';
-        });
-    }
-    
-    // Apply to different elements with different strengths
-    if (window.matchMedia('(min-width: 768px)').matches) {
-        // Featured work cards - strongest effect
-        document.querySelectorAll('.case-card').forEach(card => {
-            applyMagneticEffect(card, {
-                maxMove: 12,
-                scale: 0.03,
-                rotation: 0.5
-            });
-        });
-        
-        // Selected work cards - medium effect
-        document.querySelectorAll('.selected-card').forEach(card => {
-            applyMagneticEffect(card, {
-                maxMove: 8,
-                scale: 0.02,
-                rotation: 0.3
-            });
-        });
-        
-        // Bento items - subtle effect
-        document.querySelectorAll('.bento-item:not(.large)').forEach(card => {
-            applyMagneticEffect(card, {
-                maxMove: 5,
-                scale: 0.01,
-                rotation: 0.2
-            });
-        });
-        
-        // Large bento item - special treatment
-        document.querySelectorAll('.bento-item.large').forEach(card => {
-            applyMagneticEffect(card, {
-                maxMove: 15,
-                scale: 0.02,
-                rotation: 0.4
-            });
-        });
-        
-        // Footer boxes - very subtle
-        document.querySelectorAll('.footer-box').forEach(box => {
-            applyMagneticEffect(box, {
-                maxMove: 4,
-                scale: 0.01,
-                rotation: 0
-            });
-        });
-    } 
+                // Large bento item - special treatment
+                document.querySelectorAll('.bento-item.large').forEach(card => {
+                    applyMagneticEffect(card, {
+                        maxMove: 15,
+                        scale: 0.02,
+                        rotation: 0.4
+                    });
+                });
+                
+                // Footer boxes - very subtle
+                document.querySelectorAll('.footer-box').forEach(box => {
+                    applyMagneticEffect(box, {
+                        maxMove: 4,
+                        scale: 0.01,
+                        rotation: 0
+                    });
+                });
+            } 
 
         });
     </script>
